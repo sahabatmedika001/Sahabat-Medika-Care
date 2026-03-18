@@ -1,104 +1,49 @@
-<<<<<<< HEAD
 /**
- * KONFIGURASI NOMOR WHATSAPP (REGION JABODETABEK)
+ * KONFIGURASI NOMOR (REGION JABODETABEK)
+ * Satu nomor utama untuk semua layanan pesan (Ambulan & Medis)
  */
-const NO_UNIT_ADMIN = "6282289376856"; 
-const NO_UNIT_MEDIS = "6282289376856"; 
-
-// Nomor Konsultasi & Emergency (Dual Number)
-const NO_KONSULTASI_1 = "6285694741341"; 
-const NO_KONSULTASI_2 = "6285891205901"; 
+const NO_UTAMA_WA = "6282289376856"; 
 
 /**
  * MODAL HANDLER
  */
 function openModal() {
     const modal = document.getElementById('modal-service');
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
 }
 
 function closeModal() {
     const modal = document.getElementById('modal-service');
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
 }
 
 /**
- * REDIRECT WHATSAPP JABODETABEK
+ * REDIRECT WHATSAPP
  */
-function redirectToWA(tipe, alt = false) {
-    let target = "";
+function redirectToWA(tipe) {
     let pesan = "";
 
     if (tipe === 'Ambulan') {
-        target = NO_UNIT_MEDIS;
-        pesan = "EMERGENCY: Halo Sahabat Medika, saya membutuhkan unit Ambulan segera di wilayah Jabodetabek.";
-    } else if (tipe === 'Layanan Rutin') {
-        target = NO_UNIT_ADMIN;
-        pesan = "Halo Sahabat Medika Jabodetabek, saya ingin bertanya rincian layanan kunjungan harian atau perawat lansia.";
+        pesan = "EMERGENCY: Halo Sahabat Medika, saya membutuhkan unit Ambulan segera di wilayah Jabodetabek. Apakah bisa di bantu ? ";
+    } else if (tipe === 'Medis') {
+        pesan = "Halo Unit Medis Sahabat Medika, saya ingin bertanya mengenai layanan Infus/Injeksi/Home Care.";
     } else {
-        // Logika Pilihan Nomor Konsultasi (1 atau 2)
-        target = alt ? NO_KONSULTASI_2 : NO_KONSULTASI_1;
-        pesan = "Halo Tim Sahabat Medika Jabodetabek, saya ingin berkonsultasi mengenai layanan kesehatan keluarga saya.";
+        pesan = "Halo Sahabat Medika, saya ingin berkonsultasi mengenai layanan kesehatan.";
     }
 
-    window.open(`https://wa.me/${target}?text=${encodeURIComponent(pesan)}`, '_blank');
+    window.open(`https://wa.me/${NO_UTAMA_WA}?text=${encodeURIComponent(pesan)}`, '_blank');
 }
 
+// Menutup modal jika user klik di luar kotak modal
 window.onclick = function(event) {
     const modal = document.getElementById('modal-service');
     if (event.target == modal) {
         closeModal();
     }
-=======
-/**
- * KONFIGURASI NOMOR WHATSAPP (REGION JABODETABEK)
- */
-const NO_UNIT_ADMIN = "6282289376856"; 
-const NO_UNIT_MEDIS = "6285891205901"; 
-const NO_KONSULTASI = "6285694741341"; 
-
-/**
- * MODAL HANDLER
- */
-function openModal() {
-    const modal = document.getElementById('modal-service');
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-    const modal = document.getElementById('modal-service');
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-/**
- * REDIRECT WHATSAPP JABODETABEK
- */
-function redirectToWA(tipe) {
-    let target = "";
-    let pesan = "";
-
-    if (tipe === 'Layanan Rutin') {
-        target = NO_UNIT_ADMIN;
-        pesan = "Halo Sahabat Medika Jabodetabek, saya ingin bertanya rincian layanan kunjungan harian atau perawat lansia di rumah.";
-    } else if (tipe === 'Layanan Medis') {
-        target = NO_UNIT_MEDIS;
-        pesan = "Halo Unit Medis Sahabat Medika, saya membutuhkan informasi mengenai paket infus/vitamin atau perawatan alat medis.";
-    } else {
-        target = NO_KONSULTASI;
-        pesan = "Halo Tim Sahabat Medika Jabodetabek, saya ingin berkonsultasi mengenai layanan kesehatan untuk keluarga saya.";
-    }
-
-    window.open(`https://wa.me/${target}?text=${encodeURIComponent(pesan)}`, '_blank');
-}
-
-window.onclick = function(event) {
-    const modal = document.getElementById('modal-service');
-    if (event.target == modal) {
-        closeModal();
-    }
->>>>>>> eb439493094488c6f6c998dd0f767bac4794d2e9
 }
